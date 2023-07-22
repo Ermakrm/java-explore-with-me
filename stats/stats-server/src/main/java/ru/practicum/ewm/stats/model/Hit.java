@@ -20,7 +20,7 @@ public class Hit {
     String app;
     @Column(nullable = false)
     String uri;
-    @Column(nullable = false)
+    @Column(nullable = false, length = 15)
     String ip;
     @Column(nullable = false)
     LocalDateTime timestamp;

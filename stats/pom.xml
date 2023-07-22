@@ -11,7 +11,7 @@
     <packaging>pom</packaging>
 
     <name>stats</name>
-    <url>http://maven.apache.org</url>
+
     <modules>
         <module>stats-client</module>
         <module>stats-dto</module>
@@ -24,11 +24,4 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-    </dependencies>
 </project>
