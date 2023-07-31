@@ -16,7 +16,7 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public void findOrSaveLocation(Location location) {
         if (!locationRepository.existsByLatAndLon(location.getLat(), location.getLon())) {
-            location = locationRepository.save(location);
+            locationRepository.save(location);
         }
     }
 }
