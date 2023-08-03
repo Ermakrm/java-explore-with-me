@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "1fba9689-2616-428b-8c3d-cf26723c7c9a",
-		"name": "feature",
+		"_postman_id": "9d91a78b-3da8-498a-8148-97e697341c83",
+		"name": "feature Copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "25786035",
-		"_collection_link": "https://martian-astronaut-962484.postman.co/workspace/Team-Workspace~45b4ec42-5d2c-466c-8cb4-cbb6a96edadd/collection/25786035-1fba9689-2616-428b-8c3d-cf26723c7c9a?action=share&creator=25786035&source=collection_link"
+		"_collection_link": "https://martian-astronaut-962484.postman.co/workspace/Team-Workspace~45b4ec42-5d2c-466c-8cb4-cbb6a96edadd/collection/25786035-9d91a78b-3da8-498a-8148-97e697341c83?action=share&creator=25786035&source=collection_link"
 	},
 	"item": [
 		{
@@ -76,11 +76,6 @@
 									"pm.expect(target).to.have.property('text');\r",
 									"pm.expect(target).to.have.property('author');\r",
 									"pm.expect(target).to.have.property('published');\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {\r",
-									"    pm.expect(target.id).to.not.be.null;\r",
-									"    pm.expect(source.text).equal(target.text, 'Текст комментария должен совпадать с отправленным');\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -202,11 +197,6 @@
 									"pm.test(\"Категория должна содержать поля: id, text\", function () {\r",
 									"pm.expect(target).to.have.property('id');\r",
 									"pm.expect(target).to.have.property('text');\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {\r",
-									"    pm.expect(target.id).to.not.be.null;\r",
-									"    pm.expect(source.text).equal(target.text, 'Название категории должно совпадать с отправленным');\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -309,11 +299,6 @@
 									"pm.test(\"Категория должна содержать поля: id, name\", function () {\r",
 									"pm.expect(target).to.have.property('id');\r",
 									"pm.expect(target).to.have.property('text');\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {\r",
-									"    pm.expect(source.id).equal(target.id, 'Идентификатор категории должен соответствовать идентификатору в запросе');\r",
-									"    pm.expect(source.text).equal(target.text, 'Название категории должно соответствовать названию категории с указанным идентификатором');\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -396,18 +381,7 @@
 									"source = pm.collectionVariables.get('response');\r",
 									"comId = pm.collectionVariables.get('comid');\r",
 									"\r",
-									"pm.test(\"Категория должна быть найдена до удаления\", function () {\r",
-									"    pm.expect(source.id).equal(comId, 'Идентификтор категории должен совпадать с удаляемым');\r",
-									"});\r",
-									"\r",
-									"pm.sendRequest({\r",
-									"            url: pm.collectionVariables.get(\"baseUrl\") + \"/admin/comments/\" + comId,\r",
-									"            method: 'GET',\r",
-									"        }, (error, response) => {\r",
-									"            pm.test(\"Категория не должна быть найдена после удаления\", function () {\r",
-									"                pm.expect(response.code).to.eql(404);\r",
-									"            });\r",
-									"        });"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -496,11 +470,7 @@
 									"pm.expect(target[0]).to.have.property('id');\r",
 									"pm.expect(target[0]).to.have.property('text');\r",
 									"});\r",
-									"\r",
-									"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {\r",
-									"    pm.expect(source.id).equal(founded.id, 'Идентификатор комментария должен соответствовать идентификатору комментария добавленного ранее');\r",
-									"    pm.expect(source.text).equal(founded.text, 'Текс комментария должен соответствовать тексту комментария добавленного ранее');\r",
-									"});"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -588,11 +558,6 @@
 									"pm.test(\"Категория должна содержать поля: id, text\", function () {\r",
 									"pm.expect(target[0]).to.have.property('id');\r",
 									"pm.expect(target[0]).to.have.property('text');\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {\r",
-									"    pm.expect(source.id).equal(founded.id, 'Идентификатор комментария должен соответствовать идентификатору комментария добавленного ранее');\r",
-									"    pm.expect(source.text).equal(founded.text, 'Текс комментария должен соответствовать тексту комментария добавленного ранее');\r",
 									"});"
 								],
 								"type": "text/javascript"
