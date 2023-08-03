@@ -10,13 +10,11 @@ import ru.practicum.category.repository.CategoryRepository;
 import ru.practicum.exception.IllegalActionException;
 import ru.practicum.exception.ObjectNotFoundException;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@Transactional
 public class CategoryServiceImpl implements CategoryService {
 
     CategoryRepository categoryRepository;

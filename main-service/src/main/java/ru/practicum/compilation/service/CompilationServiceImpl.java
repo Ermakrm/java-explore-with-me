@@ -11,13 +11,11 @@ import ru.practicum.compilation.model.Compilation;
 import ru.practicum.compilation.repository.CompilationRepository;
 import ru.practicum.exception.ObjectNotFoundException;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@Transactional
 public class CompilationServiceImpl implements CompilationService {
 
     CompilationRepository compilationRepository;
