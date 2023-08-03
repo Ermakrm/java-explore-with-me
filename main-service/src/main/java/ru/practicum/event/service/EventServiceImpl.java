@@ -40,6 +40,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Transactional
 public class EventServiceImpl implements EventService {
     EventRepository eventRepository;
     EventMapper eventMapper;

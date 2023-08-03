@@ -26,6 +26,7 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Transactional
 public class RequestServiceImpl implements RequestService {
     UserService userService;
     EventService eventService;

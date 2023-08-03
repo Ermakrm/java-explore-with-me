@@ -14,6 +14,7 @@ import ru.practicum.exception.ObjectNotFoundException;
 import ru.practicum.user.model.User;
 import ru.practicum.user.service.UserService;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -21,6 +22,7 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Transactional
 public class CommentServiceImpl implements CommentService {
     CommentRepository commentRepository;
     UserService userService;
