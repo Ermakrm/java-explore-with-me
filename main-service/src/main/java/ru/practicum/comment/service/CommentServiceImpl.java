@@ -33,7 +33,7 @@ public class CommentServiceImpl implements CommentService {
     public Comment saveComment(Comment comment, Long userId, Long eventId) {
         User author = userService.findUserById(userId);
         Event event = eventService.findEventById(eventId);
-        if (!event.getState().equals(State.PUBLISHED)){
+        if (!event.getState().equals(State.PUBLISHED)) {
             throw new IllegalActionException("You can only comment on published events");
         }
         comment.setAuthor(author);
