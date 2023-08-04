@@ -67,12 +67,12 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<Comment> findCommentsByEventId(Long eventId, int from, int size) {
-        return commentRepository.findAllByEventId(eventId, PageRequest.of(from / size, size));
+        return commentRepository.findAllByEventIdOrderByPublished(eventId, PageRequest.of(from / size, size));
     }
 
     @Override
     public List<Comment> findCommentsByUserId(Long userId, int from, int size) {
-        return commentRepository.findAllByAuthorId(userId, PageRequest.of(from / size, size));
+        return commentRepository.findAllByAuthorIdOrderByPublished(userId, PageRequest.of(from / size, size));
     }
 
     private void existCommentById(Long id) {
