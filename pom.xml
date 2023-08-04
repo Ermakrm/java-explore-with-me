@@ -38,7 +38,6 @@
 				<artifactId>hibernate-core</artifactId>
 				<version>${hibernate-core.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>org.projectlombok</groupId>
 				<artifactId>lombok-mapstruct-binding</artifactId>

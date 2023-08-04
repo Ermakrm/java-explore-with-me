@@ -6,6 +6,11 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.comment.dto.CommentRequestDto;
+import ru.practicum.comment.dto.CommentResponseDto;
+import ru.practicum.comment.mapper.CommentMapper;
+import ru.practicum.comment.model.Comment;
+import ru.practicum.comment.service.CommentService;
 import ru.practicum.event.dto.*;
 import ru.practicum.event.mapper.EventListMapper;
 import ru.practicum.event.mapper.EventMapper;
@@ -29,6 +34,8 @@ public class PrivateEventsController {
     EventMapper eventMapper;
     RequestService requestService;
     RequestListMapper requestListMapper;
+    CommentService commentService;
+    CommentMapper commentMapper;
 
     @GetMapping
     public List<EventShortDto> getEvents(
@@ -96,5 +103,19 @@ public class PrivateEventsController {
     ) {
         log.info("updateStatusByEventId userId={};eventId={};event={}", userId, eventId, eventRequestStatusUpdateRequest);
         return requestService.updateStatusRequests(userId, eventId, eventRequestStatusUpdateRequest);
+    }
+
+    @PostMapping("/{eventId}/comments")
+    @ResponseStatus(HttpStatus.CREATED)
+    public CommentResponseDto saveComment(
+            @PathVariable Long userId,
+            @PathVariable Long eventId,
+            @RequestBody CommentRequestDto commentRequestDto
+            ) {
+        log.info("saveComment userId={};eventId{};comment={}", userId, eventId, commentRequestDto);
+        Comment comment = commentService.saveComment(
+                commentMapper.toComment(commentRequestDto), userId, eventId
+        );
+        return commentMapper.toCommentResponseDto(comment);
     }
 }
