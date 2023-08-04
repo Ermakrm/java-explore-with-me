@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.practicum.comment.model.Comment;
 import ru.practicum.comment.repository.CommentRepository;
+import ru.practicum.enums.State;
 import ru.practicum.event.model.Event;
 import ru.practicum.event.service.EventService;
 import ru.practicum.exception.IllegalActionException;
@@ -32,6 +33,9 @@ public class CommentServiceImpl implements CommentService {
     public Comment saveComment(Comment comment, Long userId, Long eventId) {
         User author = userService.findUserById(userId);
         Event event = eventService.findEventById(eventId);
+        if (!event.getState().equals(State.PUBLISHED)){
+            throw new IllegalActionException("You can only comment on published events");
+        }
         comment.setAuthor(author);
         comment.setEvent(event);
         comment.setPublished(LocalDateTime.now());
