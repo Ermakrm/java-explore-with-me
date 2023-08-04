@@ -1,12 +1,16 @@
 package ru.practicum.event.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.comment.dto.CommentResponseDto;
+import ru.practicum.comment.mapper.CommentListMapper;
+import ru.practicum.comment.model.Comment;
+import ru.practicum.comment.service.CommentService;
 import ru.practicum.enums.SortType;
 import ru.practicum.event.dto.EventFullDto;
 import ru.practicum.event.dto.EventShortDto;
@@ -30,8 +34,9 @@ public class PublicEventsController {
     EventMapper eventMapper;
     EventListMapper eventListMapper;
     StatisticsService statisticsService;
+    CommentService commentService;
+    CommentListMapper commentListMapper;
 
-    @SneakyThrows
     @GetMapping
     public List<EventShortDto> getEvents(
             @RequestParam(required = false) String text,
@@ -44,7 +49,7 @@ public class PublicEventsController {
             @RequestParam(defaultValue = "0") int from,
             @RequestParam(defaultValue = "10") int size,
             HttpServletRequest request
-    ) {
+    ) throws JsonProcessingException {
         List<Event> events = eventService.getPublishedEvents(text, categories, paid, rangeStart, rangeEnd,
                 onlyAvailable, sortType, from, size);
         log.info("getEvents text={};categories={};paid={};start={};end={};onlyAvailable={};sortType={};from={};size={}",
@@ -53,12 +58,24 @@ public class PublicEventsController {
         return eventListMapper.toEventShortDtoList(events);
     }
 
-    @SneakyThrows
     @GetMapping("/{id}")
-    public EventFullDto getPublicEventById(@PathVariable Long id, HttpServletRequest request) {
+    public EventFullDto getPublicEventById(@PathVariable Long id, HttpServletRequest request) throws JsonProcessingException {
         Event event = eventService.findPublicEventById(id);
         log.info("getEventById id={};event={}", id, event);
         statisticsService.saveStatistics(request);
         return eventMapper.toEventFullDto(event);
+    }
+
+    @GetMapping("/{eventId}/comments")
+    public List<CommentResponseDto> getCommentsByEventId(
+            @PathVariable Long eventId,
+            @RequestParam(defaultValue = "0") int from,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        log.info("getCommentsByEventId eventId={};from={};size={}", eventId, from, size);
+        List<Comment> comments = commentService.findCommentsByEventId(
+                eventId, from, size
+        );
+        return commentListMapper.toCommentResponseDtoList(comments);
     }
 }
