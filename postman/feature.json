@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "9d91a78b-3da8-498a-8148-97e697341c83",
-		"name": "feature Copy",
+		"_postman_id": "1fba9689-2616-428b-8c3d-cf26723c7c9a",
+		"name": "feature",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "25786035",
-		"_collection_link": "https://martian-astronaut-962484.postman.co/workspace/Team-Workspace~45b4ec42-5d2c-466c-8cb4-cbb6a96edadd/collection/25786035-9d91a78b-3da8-498a-8148-97e697341c83?action=share&creator=25786035&source=collection_link"
+		"_collection_link": "https://martian-astronaut-962484.postman.co/workspace/Team-Workspace~45b4ec42-5d2c-466c-8cb4-cbb6a96edadd/collection/25786035-1fba9689-2616-428b-8c3d-cf26723c7c9a?action=share&creator=25786035&source=collection_link"
 	},
 	"item": [
 		{
@@ -25,9 +25,6 @@
 									"        const user = await api.addUser(rnd.getUser());\r",
 									"        const category = await api.addCategory(rnd.getCategory());\r",
 									"        const event = await api.addEvent(user.id, rnd.getEvent(category.id));\r",
-									"        pm.collectionVariables.set(\"uid\", user.id);\r",
-									"        pm.collectionVariables.set(\"eid\", event.id);\r",
-									"        pm.collectionVariables.set(\"response\", event);\r",
 									"        pm.request.body.update({\r",
 									"            mode: 'raw',\r",
 									"            raw: JSON.stringify({\r",
@@ -71,11 +68,16 @@
 									"const source = JSON.parse(pm.request.body.raw);\r",
 									"const target = pm.response.json();\r",
 									"\r",
-									"pm.test(\"Категория должна содержать поля: id, text, author, published\", function () {\r",
+									"pm.test(\"Комментарий должен содержать поля: id, text, author, published\", function () {\r",
 									"pm.expect(target).to.have.property('id');\r",
 									"pm.expect(target).to.have.property('text');\r",
 									"pm.expect(target).to.have.property('author');\r",
 									"pm.expect(target).to.have.property('published');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {\r",
+									"    pm.expect(target.id).to.not.be.null;\r",
+									"    pm.expect(source.text).equal(target.text, 'Текст комментария должен совпадать с отправленным');\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -148,9 +150,6 @@
 									"        const category = await api.addCategory(rnd.getCategory());\r",
 									"        const event = await api.addEvent(user.id, rnd.getEvent(category.id));\r",
 									"        const comment = await api.addComment(user.id, event.id, rnd.getComment());\r",
-									"        pm.collectionVariables.set(\"uid\", user.id);\r",
-									"        pm.collectionVariables.set(\"eid\", event.id);\r",
-									"        pm.collectionVariables.set(\"comid\", comment.id);\r",
 									"    } catch(err) {\r",
 									"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
 									"    }\r",
@@ -194,9 +193,14 @@
 									"const source = JSON.parse(pm.request.body.raw);\r",
 									"const target = pm.response.json();\r",
 									"\r",
-									"pm.test(\"Категория должна содержать поля: id, text\", function () {\r",
+									"pm.test(\"Комментарий должен содержать поля: id, text\", function () {\r",
 									"pm.expect(target).to.have.property('id');\r",
 									"pm.expect(target).to.have.property('text');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {\r",
+									"    pm.expect(target.id).to.not.be.null;\r",
+									"    pm.expect(source.text).equal(target.text, 'Текст комментария должен совпадать с отправленным');\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -259,7 +263,6 @@
 									"        const event = await api.addEvent(user.id, rnd.getEvent(category.id));\r",
 									"        const comment = await api.addComment(user.id, event.id, rnd.getComment());\r",
 									"        pm.collectionVariables.set(\"response\", comment)\r",
-									"        pm.collectionVariables.set(\"comid\", comment.id)\r",
 									"    } catch(err) {\r",
 									"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
 									"    }\r",
@@ -296,9 +299,14 @@
 									"const source = pm.collectionVariables.get('response');\r",
 									"const target = pm.response.json();\r",
 									"\r",
-									"pm.test(\"Категория должна содержать поля: id, name\", function () {\r",
+									"pm.test(\"Комментарий должен содержать поля: id, text\", function () {\r",
 									"pm.expect(target).to.have.property('id');\r",
 									"pm.expect(target).to.have.property('text');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {\r",
+									"    pm.expect(source.id).equal(target.id, 'Идентификатор комментария должен соответствовать идентификатору в запросе');\r",
+									"    pm.expect(source.text).equal(target.text, 'Текст комментария должен соответствовать названию категории с указанным идентификатором');\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -381,7 +389,18 @@
 									"source = pm.collectionVariables.get('response');\r",
 									"comId = pm.collectionVariables.get('comid');\r",
 									"\r",
-									""
+									"pm.test(\"Комментарий должен быть найдена до удаления\", function () {\r",
+									"    pm.expect(source.id).equal(comId, 'Идентификтор комментария должен совпадать с удаляемым');\r",
+									"});\r",
+									"\r",
+									"pm.sendRequest({\r",
+									"            url: pm.collectionVariables.get(\"baseUrl\") + \"/admin/comments/\" + comId,\r",
+									"            method: 'GET',\r",
+									"        }, (error, response) => {\r",
+									"            pm.test(\"Комментарий не должен быть найден после удаления\", function () {\r",
+									"                pm.expect(response.code).to.eql(404);\r",
+									"            });\r",
+									"        });"
 								],
 								"type": "text/javascript"
 							}
@@ -426,7 +445,6 @@
 									"        const category = await api.addCategory(rnd.getCategory());\r",
 									"        const event = await api.addEvent(user.id, rnd.getEvent(category.id));\r",
 									"        const comment = await api.addComment(user.id, event.id, rnd.getComment());\r",
-									"        pm.collectionVariables.set(\"eid\", event.id)\r",
 									"        pm.collectionVariables.set(\"response\", comment)\r",
 									"    } catch(err) {\r",
 									"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
@@ -466,11 +484,15 @@
 									"let founded;\r",
 									"target.forEach(function(element){if (element.id == source.id) founded = element});\r",
 									"\r",
-									"pm.test(\"Категория должна содержать поля: id, text\", function () {\r",
+									"pm.test(\"Комментарий должен содержать поля: id, text\", function () {\r",
 									"pm.expect(target[0]).to.have.property('id');\r",
 									"pm.expect(target[0]).to.have.property('text');\r",
 									"});\r",
-									""
+									"\r",
+									"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {\r",
+									"    pm.expect(source.id).equal(founded.id, 'Идентификатор комментария должен соответствовать идентификатору комментария добавленного ранее');\r",
+									"    pm.expect(source.text).equal(founded.text, 'Текс комментария должен соответствовать тексту комментария добавленного ранее');\r",
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -515,7 +537,6 @@
 									"        const category = await api.addCategory(rnd.getCategory());\r",
 									"        const event = await api.addEvent(user.id, rnd.getEvent(category.id));\r",
 									"        const comment = await api.addComment(user.id, event.id, rnd.getComment());\r",
-									"        pm.collectionVariables.set(\"uid\", user.id)\r",
 									"        pm.collectionVariables.set(\"response\", comment)\r",
 									"    } catch(err) {\r",
 									"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
@@ -558,6 +579,11 @@
 									"pm.test(\"Категория должна содержать поля: id, text\", function () {\r",
 									"pm.expect(target[0]).to.have.property('id');\r",
 									"pm.expect(target[0]).to.have.property('text');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {\r",
+									"    pm.expect(source.id).equal(founded.id, 'Идентификатор комментария должен соответствовать идентификатору комментария добавленного ранее');\r",
+									"    pm.expect(source.text).equal(founded.text, 'Текс комментария должен соответствовать тексту комментария добавленного ранее');\r",
 									"});"
 								],
 								"type": "text/javascript"
