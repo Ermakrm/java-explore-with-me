@@ -21,7 +21,10 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String text;
-    LocalDateTime published;
+    @Column(name = "publish_date")
+    LocalDateTime publishDate;
+    @Column(name = "update_date")
+    LocalDateTime updateDate;
     @ManyToOne(targetEntity = User.class)
     User author;
     @ManyToOne(targetEntity = Event.class)

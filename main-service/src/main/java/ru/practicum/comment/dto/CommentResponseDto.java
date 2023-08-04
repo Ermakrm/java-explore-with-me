@@ -18,5 +18,7 @@ public class CommentResponseDto {
     String text;
     String author;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    LocalDateTime published;
+    LocalDateTime publishDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    LocalDateTime updateDate;
 }

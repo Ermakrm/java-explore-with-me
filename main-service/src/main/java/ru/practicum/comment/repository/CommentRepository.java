@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    List<Comment> findAllByAuthorIdOrderByPublished(Long authorId, Pageable pageable);
+    List<Comment> findAllByAuthorIdOrderByPublishDate(Long authorId, Pageable pageable);
 
-    List<Comment> findAllByEventIdOrderByPublished(Long eventId, Pageable pageable);
+    List<Comment> findAllByEventIdOrderByPublishDate(Long eventId, Pageable pageable);
 }

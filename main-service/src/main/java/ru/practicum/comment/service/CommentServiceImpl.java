@@ -38,7 +38,7 @@ public class CommentServiceImpl implements CommentService {
         }
         comment.setAuthor(author);
         comment.setEvent(event);
-        comment.setPublished(LocalDateTime.now());
+        comment.setPublishDate(LocalDateTime.now());
         return commentRepository.save(comment);
     }
 
@@ -49,6 +49,7 @@ public class CommentServiceImpl implements CommentService {
             throw new IllegalActionException("The comment can only be updated by the owner");
         }
         comment.setText(newComment.getText());
+        comment.setUpdateDate(LocalDateTime.now());
         return commentRepository.save(comment);
     }
 
@@ -67,12 +68,12 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<Comment> findCommentsByEventId(Long eventId, int from, int size) {
-        return commentRepository.findAllByEventIdOrderByPublished(eventId, PageRequest.of(from / size, size));
+        return commentRepository.findAllByEventIdOrderByPublishDate(eventId, PageRequest.of(from / size, size));
     }
 
     @Override
     public List<Comment> findCommentsByUserId(Long userId, int from, int size) {
-        return commentRepository.findAllByAuthorIdOrderByPublished(userId, PageRequest.of(from / size, size));
+        return commentRepository.findAllByAuthorIdOrderByPublishDate(userId, PageRequest.of(from / size, size));
     }
 
     private void existCommentById(Long id) {
